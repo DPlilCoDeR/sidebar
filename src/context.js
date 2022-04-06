@@ -1,23 +1,21 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 
 const AppContext = React.createContext();
 
 const AppProvider = ({ children }) => {
-  const [isSidebarOpen, SetIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openSidebar = () => {
-    SetIsSidebarOpen(true);
+    setIsSidebarOpen(true);
   };
-
   const closeSidebar = () => {
-    SetIsSidebarOpen(false);
+    setIsSidebarOpen(false);
   };
 
   const openModal = () => {
     setIsModalOpen(true);
   };
-
   const closeModal = () => {
     setIsModalOpen(false);
   };
@@ -27,19 +25,25 @@ const AppProvider = ({ children }) => {
       value={{
         isSidebarOpen,
         isModalOpen,
-        openSidebar,
-        closeSidebar,
         openModal,
         closeModal,
+        openSidebar,
+        closeSidebar,
       }}
     >
-        {children}
+      {children}
     </AppContext.Provider>
   );
 };
 
 export const useGlobalContext = () => {
-    return useContext(AppContext);
-}
+  const context = useContext(AppContext);
 
-export { AppContext, AppProvider};
+  if (context === undefined) {
+    throw new Error("GlobalContext was used outside of its Provider");
+  }
+
+  return context
+};
+
+export { AppContext, AppProvider };

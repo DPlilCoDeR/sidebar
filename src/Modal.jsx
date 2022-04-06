@@ -4,6 +4,7 @@ import { useGlobalContext } from './context'
 
 
 const Modal = () => {
+  console.log(useGlobalContext())
   const {isModalOpen, closeModal} = useGlobalContext();
 
   return (
